@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://mindicador.cl; base-uri 'none'; form-action 'none'; object-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="Impuestos y plata en Chile, sin enredos: reforma tributaria, F22, F29, indicadores, leyes y planillas gratis.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lucas Claras</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<nav>
+  <div class="in">
+    <a class="brand" href="#inicio" aria-label="Lucas Claras, inicio">
+      <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#21c46b"/><circle cx="29" cy="11" r="6" fill="#ffd23f" stroke="#151a18" stroke-width="2"/><text x="17" y="27" text-anchor="middle" font-family="Sora,sans-serif" font-weight="800" font-size="16" fill="#06210f">LC</text></svg>
+      Lucas Claras
+    </a>
+    <div class="links">
+      <a href="#indicadores">Indicadores</a>
+      <a href="#historico">Histórico</a>
+      <a href="#reforma">Reforma</a>
+      <a href="#guias">Guías</a>
+      <a href="#calculadoras">Calculadoras</a>
+      <a href="#previsional">Previsional</a>
+      <a href="#leyes">Leyes</a>
+      <a href="#descargas">Descargas</a>
+      <a href="#videos">Videos</a>
+    </div>
+    <a class="btn nav-btn" href="#suscribete">Suscríbete</a>
+  </div>
+</nav>
+
+<header class="band hero" id="inicio">
+  <div class="in">
+    <div class="top">
+      <div>
+        <h1>Impuestos y plata en Chile, sin enredos</h1>
+      </div>
+      <div>
+        <p class="lead">¿Te pierdes con el F22, el F29 o la reforma tributaria? Aquí explicamos impuestos, contabilidad y finanzas personales en simple. Para trabajadores, independientes, pymes y familias.</p>
+        <div class="ctas"><a class="btn" href="#reforma">La reforma en 5 minutos</a><a class="btn ghost" href="#calculadoras">Calcular mi retención</a></div>
+      </div>
+    </div>
+    <div class="stair" aria-label="Tasa del impuesto de primera categoría por año">
+      <div class="hd"><h3>La tasa a las empresas baja de 27% a 23%</h3><span class="mut">Impuesto de primera categoría, Ley 21.850</span></div>
+      <div class="steps" id="steps"></div>
+      <div class="yrs" id="yrs"></div>
+      <div class="cred" id="cred"></div>
+    </div>
+  </div>
+</header>
+
+<section class="band" id="indicadores">
+  <div class="in">
+    <div class="sec-hd">
+      <h2>Indicadores de hoy</h2>
+      <p class="mut"><span class="live" id="liveTag">Datos al 17 de noviembre de 2026</span> Fuente: Banco Central de Chile y SII. En tu propio hosting, esta sección se actualiza sola cada vez que alguien abre la página.</p>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <form class="card conv" id="fc" autocomplete="off">
+      <h3>Conversor</h3>
+      <div class="row3">
+        <div><label for="cMonto">Cantidad</label><input id="cMonto" inputmode="decimal" value="10"></div>
+        <div><label for="cDe">Unidad</label><select id="cDe"></select></div>
+      </div>
+      <div class="convout" id="cOut"></div>
+    </form>
+  </div>
+</section>
+
+<section class="band alt" id="historico">
+  <div class="in">
+    <div class="sec-hd">
+      <h2 id="hTitle">Histórico mes a mes</h2>
+      <p class="mut">Elige el indicador y el año. La UF es la del día 1 de cada mes; el dólar es el promedio mensual del dólar observado.</p>
+    </div>
+    <div class="hctl">
+      <div><label for="hInd">Indicador</label><select id="hInd"><option value="uf">UF</option><option value="utm">UTM</option><option value="uta">UTA</option><option value="dolar">Dólar observado</option><option value="euro">Euro</option></select></div>
+      <div><label for="hYear">Año</label><select id="hYear"></select></div>
+    </div>
+    <div class="hgrid">
+      <div class="card"><div class="hsum" id="hSum"></div><div class="fig" id="hFig"><svg id="hSvg" role="img" aria-label="Gráfico del indicador por mes"></svg></div><p class="mut small" id="hMsg"></p></div>
+      <div class="scroll tight"><table><thead><tr><th>Mes</th><th class="r">Valor</th><th class="r">Var. mes</th></tr></thead><tbody id="hRows"></tbody></table></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="reforma">
+  <div class="in">
+    <div class="sec-hd">
+      <h2>Qué te cambia la reforma tributaria</h2>
+      <p class="mut">Es la Ley 21.850, de Reconstrucción Nacional y Desarrollo Económico y Social, conocida como megarreforma o ley miscelánea. Se publicó en el Diario Oficial el 17 de octubre de 2026 y junta muchos cambios en un solo paquete.</p>
+    </div>
+    <div class="grid" id="medidas"></div>
+    <p class="mut" style="margin-top:18px">Tiene defensores, que esperan más inversión y empleo, y críticos, que advierten una menor recaudación. Aquí nos enfocamos en lo práctico. Los requisitos de las medidas para familias aún se están detallando: confírmalos en sii.cl.</p>
+  </div>
+</section>
+
+<section class="band alt" id="calendario">
+  <div class="in">
+    <div class="sec-hd">
+      <h2>Las fechas que tienes que anotar</h2>
+      <p class="mut">De la tramitación de la ley a la próxima Operación Renta. La fecha de término de la condonación es un cálculo de 180 días desde la publicación.</p>
+    </div>
+    <ul class="time" id="time"></ul>
+  </div>
+</section>
+
+<section class="band" id="guias">
+  <div class="in">
+    <div class="sec-hd">
+      <h2>Guías rápidas: los formularios y los impuestos de todos los días</h2>
+      <p class="mut">Lo básico de cada tema en una ficha. Cada uno tiene su video completo en el canal.</p>
+    </div>
+    <div class="grid" id="guides"></div>
+  </div>
+</section>
+
+<section class="band alt" id="calculadoras">
+  <div class="in">
+    <div class="sec-hd">
+      <h2>Haz la cuenta tú mismo</h2>
+      <p class="mut">Calculadoras de referencia con las tasas generales. No consideran casos especiales; para tu situación exacta, revisa el SII o pregúntale a un contador.</p>
+    </div>
+    <div class="calc">
+      <form class="card" id="fh" autocomplete="off">
+        <span class="tag">Boleta de honorarios</span>
+        <h3>¿Cuánto te retienen?</h3>
+        <div class="row2">
+          <div><label for="hMonto">Monto bruto (CLP)</label><input id="hMonto" inputmode="numeric" value="800.000"></div>
+          <div><label for="hAnio">Año de la boleta</label>
+            <select id="hAnio"><option value="0.145">2025 · 14,5%</option><option value="0.1525" selected>2026 · 15,25%</option><option value="0.16">2027 · 16%</option><option value="0.17">2028 · 17%</option></select></div>
+        </div>
+        <div class="res">
+          <div><span class="mut">Retención</span><span class="num" id="hRet"></span></div>
+          <div><span>Recibes líquido</span><span class="num tot" id="hLiq"></span></div>
+          <div><span class="mut">Para recibir el líquido de arriba como bruto, emite por</span><span class="num" id="hInv"></span></div>
+        </div>
+      </form>
+      <form class="card" id="ft" autocomplete="off">
+        <span class="tag">Timbres y estampillas</span>
+        <h3>¿Cuánto paga tu crédito?</h3>
+        <div class="row2">
+          <div><label for="tMonto">Monto del crédito (CLP)</label><input id="tMonto" inputmode="numeric" value="5.000.000"></div>
+          <div><label for="tPlazo">Plazo en meses</label><input id="tPlazo" inputmode="numeric" value="36"></div>
+        </div>
+        <div><label for="tTipo">Tipo de documento</label>
+          <select id="tTipo"><option value="plazo" selected>Con plazo: 0,066% por mes, tope 0,8%</option><option value="vista">A la vista o sin plazo: 0,332%</option></select></div>
+        <div class="res">
+          <div><span class="mut">Tasa aplicada</span><span class="num" id="tTasa"></span></div>
+          <div><span>Impuesto</span><span class="num tot" id="tImp"></span></div>
+          <div><span class="mut" id="tNota"></span></div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="previsional">
+  <div class="in">
+    <div class="sec-hd">
+      <h2 id="pTitle">Indicadores previsionales</h2>
+      <div>
+        <p class="mut">Fuente: Previred. Corresponden a las remuneraciones del mes, con cotizaciones que se pagan el mes siguiente. Cada mes nuevo se suma al historial.</p>
+        <label for="pMes">Mes</label><select id="pMes" style="max-width:260px"></select>
+      </div>
+    </div>
+    <div class="kpis k3" id="pKpis"></div>
+    <div class="grid3">
+      <div class="scroll tight"><table><thead><tr><th>AFP</th><th class="r">Trabajador</th><th class="r">Total con empleador</th></tr></thead><tbody id="pAfp"></tbody></table></div>
+      <div class="scroll tight"><table><thead><tr><th>Seguro de cesantía</th><th class="r">Empleador</th><th class="r">Trabajador</th></tr></thead><tbody id="pAfc"></tbody></table></div>
+      <div class="scroll tight"><table><thead><tr><th>Asignación familiar</th><th class="r">Monto</th><th>Renta mensual</th></tr></thead><tbody id="pAsig"></tbody></table></div>
+    </div>
+    <div class="grid" id="pOtros" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr))"></div>
+    <div class="grid" id="pTxt" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));margin-top:16px"></div>
+    <form class="card conv" id="fs" autocomplete="off" style="margin-top:16px">
+      <span class="tag">Calculadora</span>
+      <h3>¿Cuánto te descuentan del sueldo?</h3>
+      <div class="row3">
+        <div><label for="sBruto">Sueldo imponible (CLP)</label><input id="sBruto" inputmode="numeric" value="1.200.000"></div>
+        <div><label for="sAfp">AFP</label><select id="sAfp"></select></div>
+        <div><label for="sCon">Contrato</label><select id="sCon"><option value="0.006">Indefinido</option><option value="0">Plazo fijo</option></select></div>
+      </div>
+      <div class="res" id="sRes"></div>
+      <p class="mut small">No incluye el impuesto único de segunda categoría ni una Isapre con plan sobre el 7%. Se aplica el tope imponible del mes.</p>
+    </form>
+  </div>
+</section>
+
+<section class="band alt" id="leyes">
+  <div class="in">
+    <div class="sec-hd">
+      <h2>Biblioteca de leyes</h2>
+      <p class="mut">Normas tributarias, comerciales, mercantiles y previsionales, con enlace al texto actualizado en LeyChile, de la Biblioteca del Congreso Nacional.</p>
+    </div>
+    <div class="hctl">
+      <div style="flex:1 1 260px"><label for="lBus">Buscar</label><input id="lBus" type="search" placeholder="Ej.: IVA, pagaré, sociedad, pensiones"></div>
+      <div class="chips" id="lCat" role="group" aria-label="Filtrar por categoría"></div>
+    </div>
+    <div class="grid" id="lList"></div>
+    <p class="mut small" id="lNone" hidden>No hay leyes que coincidan con la búsqueda.</p>
+  </div>
+</section>
+
+<section class="band" id="descargas">
+  <div class="in">
+    <div class="sec-hd">
+      <h2>Planillas gratis para descargar</h2>
+      <p class="mut">Formatos de Excel listos para usar: liquidación de sueldo, balances, flujo de caja, presupuesto y más. Cada uno trae un ejemplo completo para que veas cómo llenarlo.</p>
+    </div>
+    <div class="dl-wrap">
+      <div class="grid dl-grid" id="dlList"></div>
+      <aside class="card seg">
+        <span class="tag">Seguridad</span>
+        <h3 style="margin-top:10px">Por qué puedes descargarlas tranquilo</h3>
+        <ul class="segl">
+          <li><b>Sin macros.</b> Son archivos .xlsx, que no pueden ejecutar código. Desconfía de cualquier planilla .xlsm o .xls que te pida “habilitar contenido”.</li>
+          <li><b>Sin vínculos externos</b> ni conexiones a internet. Funcionan sin red.</li>
+          <li><b>Sin datos personales.</b> Los nombres, RUT y montos son de ejemplo.</li>
+          <li><b>Incluidas en la misma página,</b> sin pasar por Drive, Mega ni otros servicios.</li>
+          <li><b>Verificadas al descargar.</b> Antes de guardar, la página compara la huella SHA-256 del archivo con la publicada. Si no coincide, no se descarga.</li>
+          <li><b>Fórmulas protegidas</b> (sin clave) para que no se borren por error.</li>
+        </ul>
+        <details>
+          <summary>Verificar la huella en tu computador</summary>
+          <p class="small">Windows (PowerShell):</p><pre><code>Get-FileHash .\archivo.xlsx -Algorithm SHA256</code></pre>
+          <p class="small">Mac o Linux (Terminal):</p><pre><code>shasum -a 256 archivo.xlsx</code></pre>
+          <p class="small">El resultado debe ser idéntico a la huella que aparece en la ficha de la planilla.</p>
+        </details>
+      </aside>
+    </div>
+    <p class="mut small" id="dlMsg" role="status"></p>
+  </div>
+</section>
+
+<section class="band alt" id="videos">
+  <div class="in">
+    <div class="sec-hd">
+      <h2>Los primeros 10 videos del canal</h2>
+      <p class="mut">Un video largo por semana y tres Shorts sacados de cada uno. El de la Operación Renta sale en marzo, justo antes de que se abra el F22.</p>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>#</th><th>Video</th><th>Tema</th><th class="hide-s">Semana</th></tr></thead>
+        <tbody id="vids"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="suscribete">
+  <div class="in sub">
+    <div>
+      <h2>Un video nuevo cada semana</h2>
+      <p>Suscríbete en YouTube y cuéntanos en los comentarios qué tema quieres ver primero: F29, F22 o timbres.</p>
+    </div>
+    <div class="ctas"><a class="btn" href="https://www.youtube.com/@lucasclaras" rel="noopener noreferrer">Ir al canal @lucasclaras</a><a class="btn ghost" href="#guias">Ver las guías</a></div>
+  </div>
+</section>
+
+<footer class="band">
+  <div class="in cols">
+    <div>
+      <strong style="color:var(--ink)">Lucas Claras</strong>
+      <p>Contenido informativo. No constituye asesoría tributaria ni reemplaza a un contador. Revisa siempre tu caso en el SII.</p>
+    </div>
+    <div>
+      <strong style="color:var(--ink)">Fuentes</strong>
+      <ul>
+        <li><a href="https://www.sii.cl/valores_y_fechas/" rel="noopener noreferrer">SII: valores y fechas (UF, UTM, dólar)</a></li>
+        <li><a href="https://www.bcentral.cl" rel="noopener noreferrer">Banco Central de Chile</a></li>
+        <li><a href="https://www.previred.com/indicadores-previsionales/" rel="noopener noreferrer">Previred: indicadores previsionales</a></li>
+        <li><a href="https://www.bcn.cl/leychile" rel="noopener noreferrer">BCN: LeyChile</a></li>
+        <li><a href="https://www.emol.com/noticias/Nacional/2026/10/17/1214405/ley-reconstruccion-diario-oficial-medidas.html" rel="noopener noreferrer">Emol: publicación de la ley</a></li>
+        <li><a href="https://www.nss.cl/zh/resources/reforma-tributaria-2026" rel="noopener noreferrer">NSS: la megarreforma, medida por medida</a></li>
+        <li><a href="https://www.cnnchile.com/pais/megarreforma-del-gobierno-es-publicada-en-el-diario-oficial-que-medidas-comenzaran-a-regir-en-noviembre/" rel="noopener noreferrer">CNN Chile: medidas desde noviembre</a></li>
+      </ul>
+    </div>
+    <div>
+      <strong style="color:var(--ink)">Síguenos</strong>
+      <ul><li>YouTube: @lucasclaras</li><li>TikTok, Instagram y Facebook: @lucasclaras</li></ul>
+      <p>Actualizado el 17 de noviembre de 2026.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+name: Vigilancia del sitio en vivo
+
+# Cada día compara los archivos publicados con las huellas del repositorio.
+# Si algo cambió sin pasar por el repositorio, o el sitio no responde, abre un aviso (issue).
+on:
+  schedule:
+    - cron: "41 10 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  vigilar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Comparar el sitio publicado con el repositorio
+        id: check
+        env:
+          SITE: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+        run: |
+          set -u
+          fallas=""
+          while read -r hash file; do
+            [ -z "$hash" ] && continue
+            if ! curl -fsSL --max-time 30 --proto '=https' "$SITE/$file" -o /tmp/f; then
+              fallas="$fallas\n- No se pudo descargar $file"
+              continue
+            fi
+            real=$(sha256sum /tmp/f | cut -d' ' -f1)
+            [ "$real" != "$hash" ] && fallas="$fallas\n- $file cambió (esperado $hash, publicado $real)"
+          done < SHA256SUMS
+          if [ -n "$fallas" ]; then
+            printf "%b\n" "$fallas" > /tmp/reporte.txt
+            echo "alerta=1" >> "$GITHUB_OUTPUT"
+            cat /tmp/reporte.txt
+          else
+            echo "Todo coincide."
+          fi
+      - name: Abrir aviso
+        if: steps.check.outputs.alerta == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          abiertas=$(gh issue list --repo "$GITHUB_REPOSITORY" --label alerta-seguridad --state open --json number --jq 'length')
+          gh label create alerta-seguridad --repo "$GITHUB_REPOSITORY" --color B60205 --force >/dev/null
+          cuerpo="$(printf 'La vigilancia diaria encontró diferencias entre el sitio publicado y el repositorio:\n\n'; cat /tmp/reporte.txt; printf '\n\nRevisa el historial de despliegues y de commits. Si no reconoces el cambio, cambia tu contraseña de GitHub, revisa las sesiones activas y vuelve a publicar desde main.')"
+          if [ "$abiertas" = "0" ]; then
+            gh issue create --repo "$GITHUB_REPOSITORY" --label alerta-seguridad --title "Alerta: el sitio publicado no coincide con el repositorio" --body "$cuerpo"
+          else
+            n=$(gh issue list --repo "$GITHUB_REPOSITORY" --label alerta-seguridad --state open --json number --jq '.[0].number')
+            gh issue comment "$n" --repo "$GITHUB_REPOSITORY" --body "$cuerpo"
+          fi
+          exit 1
