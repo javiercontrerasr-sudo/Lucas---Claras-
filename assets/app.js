@@ -59,7 +59,7 @@ calcH();calcT();
 
 /* ---------- Indicadores ---------- */
 const n2=(v,d=2)=>v.toLocaleString('es-CL',{minimumFractionDigits:d,maximumFractionDigits:d});
-const K={uf:{n:'UF',v:41350.42,d:2,f:'17 nov 2026'},utm:{n:'UTM',v:72440,d:0,f:'Noviembre 2026'},uta:{n:'UTA',v:869280,d:0,f:'Noviembre 2026'},dolar:{n:'Dólar observado',v:1001.17,d:2,f:'17 nov 2026'},euro:{n:'Euro',v:1102,d:2,f:'17 nov 2026'},tpm:{n:'Tasa de política monetaria',v:4.5,d:1,f:'17 nov 2026',pct:1},ipc:{n:'IPC octubre',v:0.5,d:1,f:'4,5% en 12 meses',pct:1},cobre:{n:'Cobre',v:6.11,d:2,f:'US$ por libra, 17 nov 2026',usd:1}};
+const K={uf:{n:'UF',v:41371.05,d:2,f:'20 nov 2026'},utm:{n:'UTM',v:72440,d:0,f:'Noviembre 2026'},uta:{n:'UTA',v:869280,d:0,f:'Noviembre 2026'},dolar:{n:'Dólar observado',v:1008.79,d:2,f:'20 nov 2026'},euro:{n:'Euro',v:1107.59,d:2,f:'20 nov 2026'},tpm:{n:'Tasa de política monetaria',v:4.5,d:1,f:'20 nov 2026',pct:1},ipc:{n:'IPC octubre',v:0.5,d:1,f:'4,5% en 12 meses',pct:1},cobre:{n:'Cobre',v:6.11,d:2,f:'US$ por libra, 17 nov 2026',usd:1}};
 const kv=k=>{const x=K[k];return x.pct?n2(x.v,x.d)+'%':(x.usd?'US$':'$')+n2(x.v,x.d)};
 const drawK=()=>{$('kpis').innerHTML=Object.keys(K).map(k=>`<div class="kpi"><span>${K[k].n}</span><b>${kv(k)}</b><small>${K[k].f}</small></div>`).join('')};
 const U=[['CLP','Pesos chilenos',1],['UF','UF','uf'],['UTM','UTM','utm'],['UTA','UTA','uta'],['USD','Dólares','dolar'],['EUR','Euros','euro']];
@@ -81,7 +81,7 @@ let LIVE=false;
 const MES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const H={uf:{2024:[36797.64,36727.1,36865.37,37100.68,37266.94,37444.94,37575.61,37577.74,37762.97,37914.2,37972.65,38260.61],2025:[38419.17,38381.93,38663.05,38899.12,39081.9,39191.97,39269.69,39173.95,39394.46,39485.65,39602.77,39643.59],2026:[39731.79,39703.5,39796.31,39841.72,40133.5,40627.62,40823.03,40844.79,40875.09,41065.38,41252.94,41446.78]},
 utm:{2024:[64666,64343,64793,65182,65443,65770,65967,65901,66362,66561,66628,67294],2025:[67429,67294,68034,68306,68648,68785,68923,68647,69265,69265,69542,69542],2026:[69751,69611,69889,69889,70588,71506,71649,71649,71721,72151,72440,72802]},
-dolar:{2024:[907.99,963.44,967.93,960.14,917.88,926.08,937.56,929.9,926.21,933.81,971.6,982.3],2025:[1000.76,956.62,932.55,961.96,941.01,938.04,951.55,966.3,960.37,953.97,935.7,916.16],2026:[883.97,862.02,909.89,897.89,897.64,903.38,930.97,917.66,947.27,982.28,978.69,null]},euro:{}};
+dolar:{2024:[907.99,963.44,967.93,960.14,917.88,926.08,937.56,929.9,926.21,933.81,971.6,982.3],2025:[1000.76,956.62,932.55,961.96,941.01,938.04,951.55,966.3,960.37,953.97,935.7,916.16],2026:[883.97,862.02,909.89,897.89,897.64,903.38,930.97,917.66,947.27,982.28,984.43,null]},euro:{}};
 H.uta={};for(const y in H.utm)H.uta[y]=H.utm[y].map(v=>v*12);
 const DEC={uf:2,utm:0,uta:0,dolar:2,euro:2};
 const yrs=[];for(let y=2026;y>=2015;y--)yrs.push(y);
